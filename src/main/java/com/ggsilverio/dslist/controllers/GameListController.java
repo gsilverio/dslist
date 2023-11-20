@@ -20,10 +20,18 @@ import java.util.List;
 public class GameListController {
     @Autowired
     private GameListService gameListService;
+    @Autowired
+    private GameService gameService;
     @GetMapping
     public ResponseEntity<List<GameListDTO>> findAll(){
         List<GameListDTO> listDTO = gameListService.findAll();
         return ResponseEntity.ok().body(listDTO);
     }
+    @GetMapping(value = "/{id}/games")
+    public ResponseEntity<List<GameMinDTO>> searchByList(@PathVariable Long id){
+        List<GameMinDTO> listDTO = gameService.searchByList(id);
+        return ResponseEntity.ok().body(listDTO);
+    }
+
 
 }

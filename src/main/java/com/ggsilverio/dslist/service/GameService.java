@@ -3,6 +3,7 @@ package com.ggsilverio.dslist.service;
 import com.ggsilverio.dslist.dto.GameDTO;
 import com.ggsilverio.dslist.dto.GameMinDTO;
 import com.ggsilverio.dslist.entities.Game;
+import com.ggsilverio.dslist.projections.GameMinProjection;
 import com.ggsilverio.dslist.repositories.GameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,12 @@ public class GameService {
         Game entity = gameRepository.findById(id).get();
         GameDTO dto = new GameDTO(entity);
         return dto;
+    }
+    @Transactional(readOnly = true)
+    public List<GameMinDTO> searchByList(Long id) {
+
+        List<GameMinProjection> gameList = gameRepository.searchByList(id);
+        return gameList.stream().map(x->new GameMinDTO(x)).toList();
     }
 
 
